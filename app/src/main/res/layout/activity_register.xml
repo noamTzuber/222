@@ -5,24 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
-
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
         android:layout_margin="20dp"
         android:background="#83FFFFFF"
+        android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-16dp">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <EditText
-            android:id="@+id/LoginUsername"
+            android:id="@+id/RegisterUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -32,7 +31,17 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/LoginPassword"
+            android:id="@+id/RegisterNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:ems="10"
+            android:hint="@string/nickname"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/RegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -41,32 +50,24 @@
             android:hint="@string/password"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/LoginButton"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/RegisterConfirmPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/loginButton"
-            android:textColor="@color/white"/>
-
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/have_not_accounted_yet" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:ems="10"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/LoginToRegisterButton"
+            android:id="@+id/RegisterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/black"
-            android:text="@string/LoginToRegisterButton"
-            android:textColor="@color/white"/>
+            android:text="@string/registerButton"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

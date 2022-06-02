@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Login</string>
+    <string name="app_name">Chat</string>
     <string name="loginButton">Login</string>
     <string name="LoginToRegisterButton">Register</string>
     <string name="have_not_accounted_yet">Have not accounted yet?</string>
