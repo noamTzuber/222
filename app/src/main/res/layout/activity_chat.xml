@@ -6,13 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
-    <ListView
-        android:id="@+id/ListOfChats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_editor_absoluteX="0dp"
-        app:layout_editor_absoluteY="0dp"
-        />
+     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:id="@+id/refreshLayout">
+     <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/lstContacts"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@android:color/darker_gray"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/chatActivityAddButton"
