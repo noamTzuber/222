@@ -23,17 +23,21 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+//
+//        list=new ArrayList<>();
+//        list.add("noam");
+//        list.add("itay");
+//        list.add("tom");
+//        list.add("dvir");
+//
+//        ListView listOfChats = binding.ListOfChats;
+//        ArrayAdapter<String> adapter= new ArrayAdapter<>(this,
+//                                 android.R.layout.simple_expandable_list_item_1,
+//                                 list);
+//        listOfChats.setAdapter(adapter);
 
-        list=new ArrayList<>();
-        list.add("noam");
-        list.add("itay");
-        list.add("tom");
-        list.add("dvir");
 
-        ListView listOfChats = binding.ListOfChats;
-        ArrayAdapter<String> adapter= new ArrayAdapter<>(this,
-                                 android.R.layout.simple_list_item_1,
-                                 list);
+
 
     }
 }

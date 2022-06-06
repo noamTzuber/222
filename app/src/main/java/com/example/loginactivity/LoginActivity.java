@@ -22,5 +22,9 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         });
+        binding.LoginButton.setOnClickListener(v -> {
+            Intent i = new Intent(this, ChatActivity.class);
+            startActivity(i);
+        });
     }
 }
