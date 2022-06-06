@@ -23,24 +23,27 @@
             android:layout_marginRight="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name" />
+            android:hint="@string/name"
+            android:id="@+id/addContactName"/>
 
         <EditText
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nickname" />
+            android:hint="@string/nickname"
+            android:id="@+id/addContactNickName"/>
 
         <EditText
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/server" />
+            android:hint="@string/server"
+            android:id="@+id/addContactServer"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/addContactAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
