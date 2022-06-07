@@ -1,12 +1,12 @@
-//package com.example.loginactivity.viewModel;
-//
-//import androidx.lifecycle.LiveData;
-//import androidx.lifecycle.ViewModel;
-//
-//import com.example.loginactivity.myObjects.Contact;
-//
-//import java.util.List;
-//
+package com.example.loginactivity.viewModel;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.loginactivity.myObjects.Contact;
+
+import java.util.List;
+
 //public class ContactViewModel extends ViewModel {
 //
 //    // interaction between contact and DB

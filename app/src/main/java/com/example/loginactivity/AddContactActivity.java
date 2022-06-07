@@ -18,10 +18,9 @@ public class AddContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB")
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
                 .allowMainThreadQueries()
                 .build();
-
         contactDao = db.contactDao();
 
         Button btnAdd=findViewById(R.id.addContactAddButton);
@@ -34,7 +33,7 @@ public class AddContactActivity extends AppCompatActivity {
             Contact contact=new Contact(name.getText().toString(),nickName.getText().toString(),
                     server.getText().toString(),"","");
             contactDao.insert(contact);
-
+            finish();
 
         });
 

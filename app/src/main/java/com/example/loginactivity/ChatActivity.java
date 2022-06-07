@@ -9,13 +9,13 @@ import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
 import com.example.loginactivity.myObjects.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
     private ActivityChatBinding binding;
     List<String> list;
+    private ContactsListAdapter adapter;
     private AppDB db;
     private ContactDao contactDao;
     @Override
@@ -24,10 +24,9 @@ public class ChatActivity extends AppCompatActivity {
         binding=ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB")
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
             .allowMainThreadQueries()
                 .build();
-
         contactDao = db.contactDao();
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
@@ -37,13 +36,20 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         RecyclerView lstContacts =findViewById(R.id.lstContacts);
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
+        adapter = new ContactsListAdapter(this);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
-        List<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("noam", "nono", "1234", "", ""));
-        adapter.setContacts(contacts);
-        contacts.add(new Contact("noam", "neno", "1234", "", ""));
-        adapter.setContacts(contacts);
+        adapter.setContacts(contactDao.index());
+//        contactDao.delete(contactDao.get("noam"));
+
+
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        adapter.setContacts(contactDao.index());
+
+    }
+
 }

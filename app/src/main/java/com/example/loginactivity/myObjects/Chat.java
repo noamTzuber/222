@@ -1,8 +1,10 @@
 package com.example.loginactivity.myObjects;
 
+import androidx.room.Entity;
+
 import java.util.List;
 
-//@Entity
+@Entity
 public class Chat {
     private int id;
     private String user1;

@@ -16,6 +16,10 @@ import java.util.List;
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
 
+    private final LayoutInflater mInflater;
+    private List<Contact> contacts;
+
+
     public ContactsListAdapter(LayoutInflater mInflater) {
         this.mInflater = mInflater;
     }
@@ -38,8 +42,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         }
     }
 
-    private final LayoutInflater mInflater;
-    private List<Contact> contacts;
+
 
 
     @Override
@@ -57,6 +60,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             holder.tvLastTime.setText(current.getLastDate());
         }
     }
+
 
     public void setContacts(List<Contact> s){
         contacts = s;
