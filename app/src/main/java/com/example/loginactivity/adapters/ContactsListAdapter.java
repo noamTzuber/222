@@ -28,7 +28,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         mInflater = LayoutInflater.from(context);
     }
 
-
+//noam
     class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvName;
         private final TextView tvLast;
