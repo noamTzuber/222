@@ -12,7 +12,7 @@ import com.example.loginactivity.myObjects.Contact;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
-    //noam
+    //noam and itay
     private ContactDao contactDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
