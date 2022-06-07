@@ -1,7 +1,6 @@
 package com.example.loginactivity.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,32 +14,33 @@ import com.example.loginactivity.myObjects.Contact;
 
 import java.util.List;
 
-public class ContactListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder>{
+public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
+
+    public ContactsListAdapter(LayoutInflater mInflater) {
+        this.mInflater = mInflater;
+    }
+
+    public ContactsListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+    }
+
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
-//        private final TextView tvId;
         private final TextView tvName;
-//        private final TextView tvServer;
         private final TextView tvLast;
         private final TextView tvLastTime;
 
-        private ContactsViewHolder(View itemView) {
+        private ContactViewHolder(View itemView) {
             super(itemView);
-//            tvId = itemView.findViewById(R.id.tvId);
             tvName = itemView.findViewById(R.id.tvName);
-//            tvServer = itemView.findViewById(R.id.tvServer);
             tvLast = itemView.findViewById(R.id.tvLast);
             tvLastTime = itemView.findViewById(R.id.tvLastTime);
         }
-
     }
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
 
-    public ContactListAdapter(Context context){
-        mInflater = LayoutInflater.from(context);
-    }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,29 +48,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactsListAdapter
         return new ContactViewHolder(itemView);
     }
 
-//    @Override
-//    public void onBindViewHolder(@NonNull ContactsListAdapter.ContactViewHolder holder, int position) {
-//        if(contacts != null){
-//            final Contact current = contacts.get(position);
-////            holder.tvId.setText(current.getId());
-//            holder.tvName.setText(current.getName());
-////            holder.tvServer.setText(current.getServer());
-//            holder.tvLast.setText(current.getLast());
-//            holder.tvLastTime.setText(current.getLastDate());
-//        }
-//    }
-
     @Override
-    public void onBindViewHolder(ContactViewHolder holder, int position) {
-        if(contacts != null){
+    public void onBindViewHolder(@NonNull ContactsListAdapter.ContactViewHolder holder, int position) {
+        if (contacts != null) {
             final Contact current = contacts.get(position);
-//            holder.tvId.setText(current.getId());
             holder.tvName.setText(current.getName());
-//            holder.tvServer.setText(current.getServer());
             holder.tvLast.setText(current.getLast());
             holder.tvLastTime.setText(current.getLastDate());
         }
     }
+
     public void setContacts(List<Contact> s){
         contacts = s;
         notifyDataSetChanged();
@@ -83,8 +70,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactsListAdapter
         }
         else return 0;
     }
-
     public List<Contact> getContacts(){
         return contacts;
     }
+
 }

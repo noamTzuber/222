@@ -1,22 +1,14 @@
 package com.example.loginactivity;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-
-import com.example.loginactivity.adapters.ContactListAdapter;
+import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
-import com.example.loginactivity.databinding.ActivityLoginBinding;
 import com.example.loginactivity.myObjects.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +37,13 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         RecyclerView lstContacts =findViewById(R.id.lstContacts);
-        final ContactListAdapter adapter = new ContactListAdapter(this);
+        final ContactsListAdapter adapter = new ContactsListAdapter(this);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         List<Contact> contacts = new ArrayList<>();
         contacts.add(new Contact("noam", "nono", "1234", "", ""));
+        adapter.setContacts(contacts);
+        contacts.add(new Contact("noam", "neno", "1234", "", ""));
         adapter.setContacts(contacts);
     }
 }
