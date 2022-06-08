@@ -1,4 +1,5 @@
 package com.example.loginactivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -36,5 +37,8 @@ public class AddContactActivity extends AppCompatActivity {
             finish();
 
         });
+
     }
+
+
 }

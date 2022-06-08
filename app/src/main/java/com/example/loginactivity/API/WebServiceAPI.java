@@ -26,4 +26,3 @@ public interface WebServiceAPI {
     @DELETE("contacts/{id}")
     Call<Void> deleteContact(@Path("id") int id);
 }
-

@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+
     private ActivityChatBinding binding;
     List<String> list;
     private ContactsListAdapter adapter;
@@ -30,6 +31,7 @@ public class ChatActivity extends AppCompatActivity {
             .allowMainThreadQueries()
                 .build();
         contactDao = db.contactDao();
+
         ContactAPI contactAPI=new ContactAPI();
         contactAPI.get();
 
@@ -38,6 +40,7 @@ public class ChatActivity extends AppCompatActivity {
             Intent i =new Intent(this, AddContactActivity.class);
             startActivity(i);
         });
+
 
         RecyclerView lstContacts =findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this);

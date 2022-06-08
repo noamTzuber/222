@@ -22,6 +22,8 @@ public class ContactAPI {
     WebServiceAPI webServiceAPI;
 
     public ContactAPI() {
+
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
