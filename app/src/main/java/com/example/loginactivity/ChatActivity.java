@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.loginactivity.API.ContactAPI;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
 import com.example.loginactivity.myObjects.Contact;
@@ -28,6 +30,8 @@ public class ChatActivity extends AppCompatActivity {
             .allowMainThreadQueries()
                 .build();
         contactDao = db.contactDao();
+        ContactAPI contactAPI=new ContactAPI();
+        contactAPI.get();
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
