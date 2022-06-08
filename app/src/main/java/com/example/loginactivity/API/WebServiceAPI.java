@@ -11,11 +11,13 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface WebServiceAPI {
 
     @GET("contacts/AllUsers")
     Call<List<Contact>> getContacts();
+//    Call<List<Contact>> getContacts(@Query("connectedId")String connectedId);
 
     @POST("contacts")
     Call<Void> createContact(@Body Contact contact);

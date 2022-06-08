@@ -4,15 +4,32 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class Contact {
 
     @PrimaryKey(autoGenerate=false)
     @NonNull
+    @SerializedName("id")
+    @Expose
     private String id;
+
+    @SerializedName("name")
+    @Expose
     private String name;
+
+    @SerializedName("server")
+    @Expose
     private String server;
+
+    @SerializedName("last")
+    @Expose
     private String last;
+
+    @SerializedName("lastDate")
+    @Expose
     private String lastDate;
 
     public Contact(){}

@@ -35,24 +35,12 @@ public class ContactAPI {
         Call<List<Contact>> call = webServiceAPI.getContacts();
         call.enqueue(new Callback<List<Contact>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Contact>> call, @NonNull Response<List<Contact>> response) {
+            public void onResponse( Call<List<Contact>> call,  Response<List<Contact>> response) {
                 List<Contact> contacts = response.body();
             }
             @Override
-            public void onFailure(@NonNull Call<List<Contact>> call, @NonNull Throwable t) {
+            public void onFailure( Call<List<Contact>> call,  Throwable t) {
             }
         });
     }
-//    public void getSingle() {
-//        Call<List<Contact>> call = webServiceAPI.getPosts();
-//        call.enqueue(new Callback<Contact>() {
-//            @Override
-//            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-//                Contact contacts = response.body();
-//            }
-//            @Override
-//            public void onFailure(Call<List<Contact>> call, Throwable t) {
-//            }
-//        });
-//    }
 }
