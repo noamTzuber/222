@@ -1,5 +1,7 @@
 package com.example.loginactivity.API;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -7,6 +9,7 @@ import com.example.loginactivity.ContactDao;
 import com.example.loginactivity.MyApplication;
 import com.example.loginactivity.R;
 import com.example.loginactivity.myObjects.Contact;
+
 
 import java.util.List;
 
@@ -36,7 +39,8 @@ public class ContactAPI {
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse( Call<List<Contact>> call,  Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
+                List<Contact> contacts= response.body();
+
             }
             @Override
             public void onFailure( Call<List<Contact>> call,  Throwable t) {
