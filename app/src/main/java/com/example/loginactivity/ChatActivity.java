@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+
         RecyclerView lstContacts =findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this);
         lstContacts.setAdapter(adapter);
