@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+
     private ActivityChatBinding binding;
     List<String> list;
     private ContactsListAdapter adapter;
