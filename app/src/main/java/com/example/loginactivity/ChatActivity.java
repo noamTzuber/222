@@ -9,10 +9,15 @@ import android.view.View;
 
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
+import com.example.loginactivity.myObjects.Contact;
+import com.example.loginactivity.myObjects.IdUser;
+import com.example.loginactivity.myObjects.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity implements ContactsListAdapter.mClickListener {
+public class ChatActivity extends AppCompatActivity  {
 
 
     private ActivityChatBinding binding;
@@ -20,22 +25,50 @@ public class ChatActivity extends AppCompatActivity implements ContactsListAdapt
     private ContactsListAdapter adapter;
     private AppDB db;
     private ContactDao contactDao;
+
+    private AppDBIdUser dbUser;
+    private IdUserDao idUserDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent=getIntent();
+        String id=intent.getStringExtra("id");
 
+
+        // room for contacts
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
                 .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
         contactDao = db.contactDao();
 
+        // room for user
+        dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        idUserDao = dbUser.idUserDao();
+
+        getAllContacts(id);
+        List<IdUser> userId=idUserDao.index();
+        if(userId.size()==0){
+            idUserDao.insert(new IdUser(id));
+        }
+        else{
+            String previousId=userId.get(0).getId();
+            if(previousId.equals(id)){
+            }
+            else{
+                idUserDao.deleteAll();
+                idUserDao.insert(new IdUser(id));
+                contactDao.deleteAll();
+
+            }
+        }
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
-            Intent intent = getIntent();
-            String id = intent.getStringExtra("id");
+            //String id = intent.getStringExtra("id");
             String server = intent.getStringExtra("server");
             Intent i =new Intent(this, AddContactActivity.class);
             i.putExtra("id",id);
@@ -58,11 +91,7 @@ public class ChatActivity extends AppCompatActivity implements ContactsListAdapt
         adapter.setContacts(contactDao.index());
 
     }
-
-    @Override
-    public void mClick(View v, int position) {
-        Intent i =new Intent(this, ContactActivity.class);
-        startActivity(i);
+    public void getAllContacts(String id){
 
     }
 }
