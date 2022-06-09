@@ -40,8 +40,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void startIntent(){
+    public void startIntent(String server ,String id){
         Intent i = new Intent(this, ChatActivity.class);
+        i.putExtra("server",server);
+        i.putExtra("id",id);
         startActivity(i);
     }
 
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     String s2 = users.get(i).getPassword();
                     if(username.equals(s1) && password.equals(s2)){
                         foundUser = true;
-                        startIntent();
+                        startIntent(users.get(i).getServer(),users.get(i).getId());
                     }
                 }
                 //itay

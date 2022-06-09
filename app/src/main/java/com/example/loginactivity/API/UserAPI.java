@@ -1,19 +1,11 @@
 package com.example.loginactivity.API;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.loginactivity.MyApplication;
 import com.example.loginactivity.R;
 import com.example.loginactivity.myObjects.User;
-
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

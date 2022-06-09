@@ -22,4 +22,8 @@
     <string name="name">name</string>
     <string name="add">Add</string>
     <string name="BaseUrl">http://10.0.2.2:1234/api/</string>
+    <string name="InviteUrl">""</string>
+    <string name="invitation_failed">invitation failed</string>
+    <string name="username_already_exist">username already exist</string>
+    <string name="Server_error">Server error</string>
 </resources>

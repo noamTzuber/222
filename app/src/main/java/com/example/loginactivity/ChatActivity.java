@@ -27,14 +27,19 @@ public class ChatActivity extends AppCompatActivity implements ContactsListAdapt
         setContentView(binding.getRoot());
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
-            .allowMainThreadQueries()
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
         contactDao = db.contactDao();
 
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
+            Intent intent = getIntent();
+            String id = intent.getStringExtra("id");
+            String server = intent.getStringExtra("server");
             Intent i =new Intent(this, AddContactActivity.class);
+            i.putExtra("id",id);
+            i.putExtra("server",server);
             startActivity(i);
         });
 

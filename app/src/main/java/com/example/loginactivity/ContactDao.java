@@ -28,5 +28,4 @@ public interface ContactDao {
 
     @Delete
     void delete(Contact... contacts);
-
 }

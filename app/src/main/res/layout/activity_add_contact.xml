@@ -42,6 +42,15 @@
             android:hint="@string/server"
             android:id="@+id/addContactServer"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addContactErrorMessage"
+            android:layout_gravity="center"
+            android:textColor="@color/red"
+            android:text=""/>
+
+
         <Button
             android:id="@+id/addContactAddButton"
             android:layout_width="wrap_content"

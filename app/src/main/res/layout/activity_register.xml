@@ -61,13 +61,20 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/RegisterButton"
+            android:id="@+id/RegisterRegisterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/registerButton"
             android:textColor="@color/white" />
 
+        <TextView
+            android:textColor="@color/red"
+            android:id="@+id/RegisterErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
