@@ -13,9 +13,10 @@ public class UserAPI {
 
     Retrofit retrofit;
     UserWebServiceAPI userWebServiceAPI;
-    public List<User> lastUserList;
+
 
     public UserAPI() {
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -27,18 +28,4 @@ public class UserAPI {
         return userWebServiceAPI;
     }
 
-//    public void get() {
-//        Call<List<User>> call = userWebServiceAPI.getUsers();
-//        call.enqueue(new Callback<List<User>>() {
-//            @Override
-//            public void onResponse( Call<List<User>> call, Response<List<User>> response) {
-//                List<User> users = response.body();
-//                lastUserList = users;
-//
-//            }
-//            @Override
-//            public void onFailure( Call<List<User>> call,  Throwable t) {
-//            }
-//        });
-//    }
 }

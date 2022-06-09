@@ -18,6 +18,6 @@ public interface UserWebServiceAPI {
     @GET("contacts/AllUsers")
     Call<List<User>> getUsers();
 
-    @POST("contacts/User")
+    @POST("contacts/User/")
     Call<Void> createUser(@Body User user);
 }

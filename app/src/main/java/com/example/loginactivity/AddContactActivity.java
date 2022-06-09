@@ -35,7 +35,7 @@ public class AddContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
-                .allowMainThreadQueries()
+                 .allowMainThreadQueries()
                 .build();
         contactDao = db.contactDao();
 
