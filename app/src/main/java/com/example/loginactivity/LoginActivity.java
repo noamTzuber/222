@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                         startIntent();
                     }
                 }
-
+                //itay
                 if(!foundUser) {
                     TextView errorMessage = (TextView) findViewById(R.id.loginErrorMessage);
                     errorMessage.setText("Username or Password incorrect");
