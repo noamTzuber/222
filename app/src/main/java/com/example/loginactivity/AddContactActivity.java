@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.loginactivity.API.ContactAPI;
+import com.example.loginactivity.API.ContactWebServiceAPI;
 import com.example.loginactivity.API.InvitationsAPI;
 import com.example.loginactivity.API.InvitationsMessage;
 import com.example.loginactivity.API.InvitationsWebServiceAPI;
@@ -39,12 +41,14 @@ public class AddContactActivity extends AppCompatActivity {
                 .build();
         contactDao = db.contactDao();
 
+       //        postUser(contactWebServiceAPI);
+
         Button btnAdd=findViewById(R.id.addContactAddButton);
         btnAdd.setOnClickListener(v->{
-
             EditText name=findViewById(R.id.addContactName);
             EditText nickName=findViewById(R.id.addContactNickName);
             EditText server=findViewById(R.id.addContactServer);
+
             // contact validation
             Intent intent = getIntent();
             String id=intent.getStringExtra("id");
@@ -58,7 +62,6 @@ public class AddContactActivity extends AppCompatActivity {
     public void invite(@NonNull InvitationsWebServiceAPI invitationsWebServiceAPI, String id , String name,String nickName, String server) {
 
         Call<Void> call =   invitationsWebServiceAPI.inviteContact(new InvitationsMessage(id,name,server),id);
-
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse( Call<Void> call, Response<Void> response) {
@@ -67,9 +70,11 @@ public class AddContactActivity extends AppCompatActivity {
                 if (isSuccessful) {
                     Contact contact = new Contact(name, nickName,
                             server, "", "");
-                    contactDao.insert(contact);
-                    ///post
-                    finish();
+
+                    ContactAPI contactAPI = new ContactAPI();
+                    ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
+                    postUser(contact,id,contactWebServiceAPI);
+                   // finish();
                 }
                 else {
                     TextView text = findViewById(R.id.addContactErrorMessage);
@@ -84,5 +89,35 @@ public class AddContactActivity extends AppCompatActivity {
                 text.setText(R.string.invitation_failed);
             }
         });
+
+    }
+
+    public void postUser(Contact contact ,String id,ContactWebServiceAPI contactWebServiceAPI){
+        Call<Void> call =   contactWebServiceAPI.postContact(contact,id);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse( Call<Void> call, Response<Void> response) {
+                //String s = response.body();
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    contactDao.insert(contact);
+                    finish();
+                }
+                else {
+                    TextView text = findViewById(R.id.addContactErrorMessage);
+                    text.setText(R.string.invitation_failed);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure( Call<Void> call,  Throwable t) {
+                TextView text= findViewById(R.id.addContactErrorMessage);
+                text.setText(R.string.invitation_failed);
+            }
+        });
+
+
     }
 }
