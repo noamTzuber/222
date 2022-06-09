@@ -71,8 +71,10 @@ public class AddContactActivity extends AppCompatActivity {
                     ///post
                     finish();
                 }
-                TextView text= findViewById(R.id.addContactErrorMessage);
-                text.setText(R.string.invitation_failed);
+                else {
+                    TextView text = findViewById(R.id.addContactErrorMessage);
+                    text.setText(R.string.invitation_failed);
+                }
 
             }
 
