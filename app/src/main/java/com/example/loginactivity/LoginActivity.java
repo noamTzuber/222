@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.loginactivity.databinding.ActivityRegisterBinding;
 import com.example.loginactivity.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,5 +25,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
         });
+
+
+
+
     }
+
+
+
 }

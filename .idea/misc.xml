@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/drawable/send_button_icon.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_add_contact.xml" value="0.1640625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_contact.xml" value="0.1125" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/contact_layout.xml" value="0.14791666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/signle_chat.xml" value="0.134765625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1405" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable/background.xml" value="0.1405" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable/background_app.xml" value="0.1405" />
