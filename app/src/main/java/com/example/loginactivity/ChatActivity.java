@@ -5,15 +5,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import com.example.loginactivity.API.ContactAPI;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
-import com.example.loginactivity.myObjects.Contact;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements ContactsListAdapter.mClickListener {
 
 
     private ActivityChatBinding binding;
@@ -32,8 +31,6 @@ public class ChatActivity extends AppCompatActivity {
                 .build();
         contactDao = db.contactDao();
 
-        ContactAPI contactAPI=new ContactAPI();
-        contactAPI.get();
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
@@ -48,8 +45,6 @@ public class ChatActivity extends AppCompatActivity {
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
         adapter.setContacts(contactDao.index());
 //        contactDao.delete(contactDao.get("noam"));
-
-
     }
 
     @Override
@@ -59,4 +54,10 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void mClick(View v, int position) {
+        Intent i =new Intent(this, ContactActivity.class);
+        startActivity(i);
+
+    }
 }
