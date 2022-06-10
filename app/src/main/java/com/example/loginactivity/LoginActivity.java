@@ -1,14 +1,19 @@
 package com.example.loginactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.loginactivity.API.ContactAPI;
+import com.example.loginactivity.API.ContactWebServiceAPI;
+import com.example.loginactivity.API.InvitationsMessage;
 import com.example.loginactivity.API.UserAPI;
 import com.example.loginactivity.API.UserWebServiceAPI;
 import com.example.loginactivity.databinding.ActivityLoginBinding;
+import com.example.loginactivity.myObjects.Contact;
 import com.example.loginactivity.myObjects.User;
 
 import java.util.List;
@@ -20,7 +25,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
-
+    private AppDB db;
+    private ContactDao contactDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             UserAPI userAPI = new UserAPI();
             UserWebServiceAPI userWebServiceAPI = userAPI.getUserWebServiceAPI();
             get(userWebServiceAPI);
+
         });
 
 
@@ -42,9 +49,43 @@ public class LoginActivity extends AppCompatActivity {
 
     public void startIntent(String server ,String id){
         Intent i = new Intent(this, ChatActivity.class);
-        i.putExtra("server",server);
-        i.putExtra("id",id);
-        startActivity(i);
+        ContactAPI contactAPI = new ContactAPI();
+        ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
+        getAllContacts(id,contactWebServiceAPI,server,i);
+
+    }
+    public void getAllContacts(String id,ContactWebServiceAPI contactWebServiceAPI,String server,Intent i){
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        contactDao = db.contactDao();
+        Call<List<Contact>> call =   contactWebServiceAPI.getContacts(id);
+        call.enqueue(new Callback<List<Contact>>() {
+            @Override
+            public void onResponse( Call<List<Contact>> call, Response<List<Contact>> response) {
+                //String s = response.body();
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    contactDao.insertAllOrders(response.body());
+                    i.putExtra("server",server);
+                    i.putExtra("id",id);
+                    startActivity(i);
+
+                }
+                else {
+                    TextView text = findViewById(R.id.addContactErrorMessage);
+                    text.setText(R.string.invitation_failed);
+                }
+
+            }
+
+            @Override
+            public void onFailure( Call<List<Contact>> call,  Throwable t) {
+                TextView text= findViewById(R.id.addContactErrorMessage);
+                text.setText(R.string.invitation_failed);
+            }
+        });
+
     }
 
     public void get( UserWebServiceAPI userWebServiceAPI) {

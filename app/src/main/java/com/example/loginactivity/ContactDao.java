@@ -26,6 +26,9 @@ public interface ContactDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Contact... contacts);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllOrders(List<Contact> contacts);
+
     @Update
     void update(Contact... contacts);
 
