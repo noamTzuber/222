@@ -15,5 +15,6 @@
     <color name="light_green">#009688</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#E40000</color>
+    <color name="whiteForBack">#AEFFFFFF</color>
 
 </resources>

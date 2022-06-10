@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/whiteForBack"
     android:layout_height="wrap_content">
 
+
     <LinearLayout
+        android:background="@color/whiteForBack"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="0dp">
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:cardCornerRadius="100dp"
+            android:layout_margin="5dp"
             app:cardBackgroundColor="@color/white">
 
             <androidx.cardview.widget.CardView
