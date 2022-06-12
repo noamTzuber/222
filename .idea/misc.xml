@@ -4,14 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_add_contact.xml" value="0.1824074074074074" />
-        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_chat.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_contact.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/activity_register.xml" value="0.2" />
-        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/contact_layout.xml" value="0.1" />
-        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/message_incoming_layout.xml" value="0.264" />
-        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/message_layout.xml" value="0.22604166666666667" />
-        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/message_outgoing_layout.xml" value="0.1" />
+        <entry key="..\:/Users/itay2/StudioProjects/222/app/src/main/res/layout/contact_layout.xml" value="0.4" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_chat.xml" value="0.13385416666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_contact.xml" value="0.16197916666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/contact_layout.xml" value="0.16197916666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/message_incoming_layout.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/222/app/src/main/res/layout/message_outgoing_layout.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1405" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable/background.xml" value="0.1405" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LoginActivity/app/src/main/res/drawable/background_app.xml" value="0.1405" />

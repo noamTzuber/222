@@ -28,6 +28,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
     private Context context;
+    private String UserId;
     private mClickListener mClickListener;
 
     public ContactsListAdapter(LayoutInflater mInflater) {
@@ -74,8 +75,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             public void onClick(View view) {
                 Intent i = new Intent(context,ContactActivity.class);
                 Contact current = contacts.get(position);
-                i.putExtra("id",current.getId() );
-                i.putExtra("name", current.getId());
+                i.putExtra("idContact",current.getId() );
+                i.putExtra("nameContact", current.getName());
 
                 context.startActivity(i);
 
@@ -88,6 +89,15 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         contacts = s;
 
     }
+    public void setUserId(String s) {
+        UserId = s;
+
+    }
+    public String getUserId() {
+       return this.UserId;
+
+    }
+
 
     @Override
     public int getItemCount() {

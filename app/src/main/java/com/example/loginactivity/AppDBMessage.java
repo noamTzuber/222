@@ -10,4 +10,6 @@ import com.example.loginactivity.myObjects.User;
 @Database(entities = {Message.class}, version = 4)
 public abstract class AppDBMessage extends RoomDatabase{
     public abstract MessageDao messageDao();
+
+
 }

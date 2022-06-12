@@ -17,11 +17,13 @@ import java.util.List;
 public interface MessageDao {
 
     @Query("SELECT * FROM message")
-    List<IdUser> index();
+    List<Message> index();
 
     @Query("DELETE  FROM message")
     void deleteAll();
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllMessages(List<Message> messages);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Message... messages);

@@ -27,6 +27,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     private final LayoutInflater mInflater;
     private List<Message> messages;
     private Context context;
+    private String userId;
     private mClickListener mClickListener;
 
     public MessagesListAdapter(LayoutInflater mInflater) {
@@ -74,6 +75,14 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         if (!i.isSent())
             viewType = 0;
         return viewType;
+    }
+    public void setUserId(String s) {
+        userId = s;
+
+    }
+    public String getUserId() {
+        return this.userId;
+
     }
 
     @Override

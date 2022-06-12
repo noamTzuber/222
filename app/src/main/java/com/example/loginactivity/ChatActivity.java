@@ -31,9 +31,11 @@ public class ChatActivity extends AppCompatActivity  {
     List<String> list;
     private ContactsListAdapter adapter;
     private AppDB db;
-    private ContactDao contactDao;
+       private ContactDao contactDao;
     private AppDBIdUser dbUser;
     private IdUserDao idUserDao;
+    private AppDBMessage dbMessage;
+    private MessageDao messageDao;
 
 
     @Override
@@ -52,18 +54,28 @@ public class ChatActivity extends AppCompatActivity  {
                 .build();
         contactDao = db.contactDao();
 
+        dbMessage = Room.databaseBuilder(getApplicationContext(), AppDBMessage.class, "roomDBMessage.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        messageDao = dbMessage.messageDao();
+
         // room for user
         dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
                 .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
         idUserDao = dbUser.idUserDao();
 
-        ContactAPI contactAPI = new ContactAPI();
-        ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
-        getAllContacts(id,contactWebServiceAPI,server);
+        RecyclerView lstContacts = findViewById(R.id.lstContacts);
+        adapter = new ContactsListAdapter(this);
+        lstContacts.setAdapter(adapter);
+        lstContacts.setLayoutManager(new LinearLayoutManager(this));
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        contactDao = db.contactDao();
 
 
-        getAllContacts(id);
         List<IdUser> userId=idUserDao.index();
         if(userId.size()==0){
             idUserDao.insert(new IdUser(id));
@@ -77,9 +89,14 @@ public class ChatActivity extends AppCompatActivity  {
                 idUserDao.deleteAll();
                 idUserDao.insert(new IdUser(id));
                 contactDao.deleteAll();
+                messageDao.deleteAll();
 
             }
         }
+
+        ContactAPI contactAPI = new ContactAPI();
+        ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
+        getAllContacts(lstContacts,id,contactWebServiceAPI,server);
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
@@ -91,11 +108,7 @@ public class ChatActivity extends AppCompatActivity  {
         });
 
 
-        RecyclerView lstContacts = findViewById(R.id.lstContacts);
-        adapter = new ContactsListAdapter(this);
-        lstContacts.setAdapter(adapter);
-        lstContacts.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setContacts(contactDao.index());
+
 //        contactDao.delete(contactDao.get("noam"));
     }
 
@@ -103,16 +116,10 @@ public class ChatActivity extends AppCompatActivity  {
     protected void onResume(){
         super.onResume();
         adapter.setContacts(contactDao.index());
-
     }
-    public void getAllContacts(String id){
 
-    }
-    public void getAllContacts(String id,ContactWebServiceAPI contactWebServiceAPI,String server){
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
-                .fallbackToDestructiveMigration().allowMainThreadQueries()
-                .build();
-        contactDao = db.contactDao();
+    public void getAllContacts(RecyclerView lstContacts ,String id,ContactWebServiceAPI contactWebServiceAPI,String server){
+
         Call<List<Contact>> call =   contactWebServiceAPI.getContacts(id);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
@@ -120,8 +127,11 @@ public class ChatActivity extends AppCompatActivity  {
                 //String s = response.body();
                 boolean isSuccessful = response.isSuccessful();
                 if (isSuccessful) {
-
+                    contactDao.deleteAll();
+                    adapter.setContacts(response.body());
+                    lstContacts.setAdapter(adapter);
                     contactDao.insertAllOrders(response.body());
+
                     //livaData - changing the room contact to server DB contacts
                 }
                 else {
