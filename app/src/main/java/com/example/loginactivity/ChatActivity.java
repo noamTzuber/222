@@ -6,7 +6,10 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.example.loginactivity.API.ContactAPI;
+import com.example.loginactivity.API.ContactWebServiceAPI;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
 import com.example.loginactivity.myObjects.Contact;
@@ -16,6 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity  {
 
@@ -35,6 +42,7 @@ public class ChatActivity extends AppCompatActivity  {
         setContentView(binding.getRoot());
         Intent intent=getIntent();
         String id=intent.getStringExtra("id");
+        String server=intent.getStringExtra("server");
 
 
         // room for contacts
@@ -49,6 +57,11 @@ public class ChatActivity extends AppCompatActivity  {
                 .build();
         idUserDao = dbUser.idUserDao();
 
+        ContactAPI contactAPI = new ContactAPI();
+        ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
+        getAllContacts(id,contactWebServiceAPI,server);
+
+
         getAllContacts(id);
         List<IdUser> userId=idUserDao.index();
         if(userId.size()==0){
@@ -57,6 +70,7 @@ public class ChatActivity extends AppCompatActivity  {
         else{
             String previousId=userId.get(0).getId();
             if(previousId.equals(id)){
+
             }
             else{
                 idUserDao.deleteAll();
@@ -69,7 +83,6 @@ public class ChatActivity extends AppCompatActivity  {
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
             //String id = intent.getStringExtra("id");
-            String server = intent.getStringExtra("server");
             Intent i =new Intent(this, AddContactActivity.class);
             i.putExtra("id",id);
             i.putExtra("server",server);
@@ -92,6 +105,35 @@ public class ChatActivity extends AppCompatActivity  {
 
     }
     public void getAllContacts(String id){
+
+    }
+    public void getAllContacts(String id,ContactWebServiceAPI contactWebServiceAPI,String server){
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        contactDao = db.contactDao();
+        Call<List<Contact>> call =   contactWebServiceAPI.getContacts(id);
+        call.enqueue(new Callback<List<Contact>>() {
+            @Override
+            public void onResponse( Call<List<Contact>> call, Response<List<Contact>> response) {
+                //String s = response.body();
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    contactDao.insertAllOrders(response.body());
+                    //livaData - changing the room contact to server DB contacts
+                }
+                else {
+                    TextView text = findViewById(R.id.addContactErrorMessage);
+                    text.setText(R.string.invitation_failed);
+                }
+            }
+
+            @Override
+            public void onFailure( Call<List<Contact>> call,  Throwable t) {
+                TextView text= findViewById(R.id.addContactErrorMessage);
+                text.setText(R.string.invitation_failed);
+            }
+        });
 
     }
 }
