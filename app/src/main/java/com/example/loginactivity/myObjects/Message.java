@@ -52,4 +52,6 @@ public class Message {
     public void setSent(boolean sent) {
         this.sent = sent;
     }
+
+
 }

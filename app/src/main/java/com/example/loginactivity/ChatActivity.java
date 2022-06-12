@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity  {
                 //String s = response.body();
                 boolean isSuccessful = response.isSuccessful();
                 if (isSuccessful) {
-                    
+
                     contactDao.insertAllOrders(response.body());
                     //livaData - changing the room contact to server DB contacts
                 }

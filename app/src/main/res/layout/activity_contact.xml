@@ -66,7 +66,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/refreshLayoutMessages">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lstMessages"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_app"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:background="@color/whiteForBack"

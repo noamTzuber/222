@@ -19,7 +19,6 @@ import com.example.loginactivity.ChatActivity;
 import com.example.loginactivity.ContactActivity;
 import com.example.loginactivity.R;
 import com.example.loginactivity.RegisterActivity;
-import com.example.loginactivity.myObjects.Contact;
 import com.example.loginactivity.myObjects.Message;
 
 import java.util.List;
@@ -83,7 +82,6 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
             final Message current = messages.get(position);
             holder.tvContentMessage.setText(current.getContent());
             holder.tvCreatedMessage.setText(current.getCreated());
-            Message i = messages.get(position);
         }
     }
 

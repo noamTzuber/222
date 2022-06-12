@@ -20,7 +20,6 @@ import com.example.loginactivity.ChatActivity;
 import com.example.loginactivity.ContactActivity;
 import com.example.loginactivity.R;
 import com.example.loginactivity.RegisterActivity;
-import com.example.loginactivity.databinding.ActivityLoginBinding;
 import com.example.loginactivity.myObjects.Contact;
 
 import java.util.List;
@@ -73,12 +72,11 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int o = position;
                 Intent i = new Intent(context,ContactActivity.class);
                 Contact current = contacts.get(position);
                 i.putExtra("id",current.getId() );
                 i.putExtra("name", current.getId());
-                int y=0;
+
                 context.startActivity(i);
 
             }
@@ -88,7 +86,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
 
     public void setContacts(List<Contact> s) {
         contacts = s;
-//        notifyDataSetChanged();
+
     }
 
     @Override
