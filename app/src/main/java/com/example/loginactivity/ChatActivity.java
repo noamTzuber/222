@@ -32,9 +32,10 @@ public class ChatActivity extends AppCompatActivity  {
     private ContactsListAdapter adapter;
     private AppDB db;
     private ContactDao contactDao;
-
     private AppDBIdUser dbUser;
     private IdUserDao idUserDao;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class ChatActivity extends AppCompatActivity  {
         });
 
 
-        RecyclerView lstContacts =findViewById(R.id.lstContacts);
+        RecyclerView lstContacts = findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
