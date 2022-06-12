@@ -60,7 +60,7 @@ public class ContactActivity extends AppCompatActivity {
                 .build();
         idUserDao = dbUser.idUserDao();
         String idUser=idUserDao.index().get(0).getId();
-//        messageDao.deleteAll();
+        messageDao.deleteAll();
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
         adapter = new MessagesListAdapter(this);
@@ -78,7 +78,14 @@ public class ContactActivity extends AppCompatActivity {
          String input=tvInput.getText().toString();
          tvInput.setText("");
          String data=LocalDateTime.now().toString();
-         messageDao.insert(new Message(0,input, data,true));
+
+         Message message=new Message(0,input, data,true);
+         List<Message> listM=messageDao.index();
+
+         listM.add(message);
+         messageDao.insert(message);
+         adapter.setMessages(listM);
+         lstMessages.setAdapter(adapter);
 
         });
 
