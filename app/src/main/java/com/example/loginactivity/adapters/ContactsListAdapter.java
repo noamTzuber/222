@@ -38,9 +38,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public ContactsListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
-
     }
-
 
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
