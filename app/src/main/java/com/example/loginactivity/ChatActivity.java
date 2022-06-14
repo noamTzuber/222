@@ -79,7 +79,7 @@ public class ChatActivity extends AppCompatActivity  {
 
         List<IdUser> userId=idUserDao.index();
         if(userId.size()==0){
-            idUserDao.insert(new IdUser(id));
+            idUserDao.insert(new IdUser(id,server));
         }
         else{
             String previousId=userId.get(0).getId();
@@ -88,7 +88,7 @@ public class ChatActivity extends AppCompatActivity  {
             }
             else{
                 idUserDao.deleteAll();
-                idUserDao.insert(new IdUser(id));
+                idUserDao.insert(new IdUser(id,server));
                 contactDao.deleteAll();
                 messageDao.deleteAll();
 
@@ -134,7 +134,6 @@ public class ChatActivity extends AppCompatActivity  {
                     adapter.setContacts(response.body());
                     lstContacts.setAdapter(adapter);
                     contactDao.insertAllOrders(response.body());
-
                     //livaData - changing the room contact to server DB contacts
                 }
                 else {

@@ -21,4 +21,6 @@ public interface MessageWebServiceAPI {
     @GET("contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id,@Query("connectedId") String connectedId);
 
+    @POST("transfer")
+    Call<Void> transferMessage(@Body MessageToTransfer message);
 }

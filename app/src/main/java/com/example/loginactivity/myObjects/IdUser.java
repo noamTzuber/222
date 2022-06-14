@@ -10,10 +10,21 @@ public class IdUser {
     @PrimaryKey(autoGenerate=false)
     @NonNull
     String id;
+    String server;
 
-    public IdUser(String id) {
-        this.id = id;
+    public String getServer() {
+        return server;
     }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public IdUser(@NonNull String id, String server) {
+        this.id = id;
+        this.server = server;
+    }
+
 
     public String getId() {
         return id;

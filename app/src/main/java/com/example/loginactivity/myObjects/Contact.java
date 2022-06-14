@@ -28,9 +28,9 @@ public class Contact {
     @Expose
     private String last;
 
-    @SerializedName("lastDate")
+    @SerializedName("lastdate")
     @Expose
-    private String lastDate;
+    private String lastdate;
 
     public Contact(){}
     public Contact(String id, String name, String server, String last, String lastDate) {
@@ -38,7 +38,7 @@ public class Contact {
         this.name = name;
         this.server = server;
         this.last = last;
-        this.lastDate = lastDate;
+        this.lastdate = lastDate;
     }
 
     public String getId() {
@@ -65,12 +65,12 @@ public class Contact {
         this.server = server;
     }
 
-    public String getLastDate() {
-        return lastDate;
+    public String getLastdate() {
+        return lastdate;
     }
 
-    public void setLastDate(String lastDate) {
-        this.lastDate = lastDate;
+    public void setLastdate(String lastlate) {
+        this.lastdate = lastlate;
     }
 
     public String getLast() {

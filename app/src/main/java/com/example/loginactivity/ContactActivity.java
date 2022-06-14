@@ -15,6 +15,9 @@ import com.example.loginactivity.API.ContactAPI;
 import com.example.loginactivity.API.ContactWebServiceAPI;
 import com.example.loginactivity.API.MessageAPI;
 import com.example.loginactivity.API.MessageForServer;
+import com.example.loginactivity.API.MessageToTransfer;
+import com.example.loginactivity.API.MessageTransferAPI;
+import com.example.loginactivity.API.MessageTransferWebServiceAPI;
 import com.example.loginactivity.API.MessageWebServiceAPI;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.adapters.MessagesListAdapter;
@@ -25,6 +28,7 @@ import com.example.loginactivity.myObjects.Message;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +56,7 @@ public class ContactActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("nameContact");
         String idContact = intent.getStringExtra("idContact");
+        String serverContact = intent.getStringExtra("serverContact");
         TextView t = findViewById(R.id.contactActivity_contactName);
         t.setText(name);
         dbMessage = Room.databaseBuilder(getApplicationContext(), AppDBMessage.class, "roomDBMessage.db")
@@ -83,39 +88,51 @@ public class ContactActivity extends AppCompatActivity {
         getAllMessages(lstMessages,messageWebServiceAPI, idUser, idContact);
 
 
+
+
         FloatingActionButton btnAdd= findViewById(R.id.ContactActivitySendButton);
         btnAdd.setOnClickListener(view->{
          TextView tvInput=findViewById(R.id.ContactActivityInput);
          String input=tvInput.getText().toString();
          tvInput.setText("");
-         String data=LocalDateTime.now().toString();
+         String time=LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString();
 
-         Message message=new Message(0,input, data,true);
+         Message message=new Message(0,input, time,true);
          List<Message> listM=messageDao.index();
 
          listM.add(message);
          messageDao.insert(message);
          adapter.setMessages(listM);
          lstMessages.setAdapter(adapter);
-         postMessage(messageWebServiceAPI,new MessageForServer(idContact,input),idUser);
+         postMessage(serverContact,time,messageWebServiceAPI,new MessageForServer(idContact,input),idUser);
         });
 
 
 
 
     }
-    public void postMessage(MessageWebServiceAPI messageWebServiceAPI,MessageForServer message,String connectedId){
-        Call<Void> call =   messageWebServiceAPI.postMessage(message,message.getContact(),connectedId);
+    public void postMessage(String serverContact,String time,MessageWebServiceAPI messageWebServiceAPI,MessageForServer message,String connectedId){
+
+         Call<Void> call =   messageWebServiceAPI.postMessage(message,message.getContact(),connectedId);
+//         MessageTransferAPI messageTransferAPI = new MessageTransferAPI(serverContact);
+//        MessageTransferWebServiceAPI  messageTransferWebServiceAPI = messageTransferAPI.getMessageTransferServiceAPI();
+//
+//        Call<Void> call =   messageTransferWebServiceAPI.transferMessage(new MessageToTransfer(connectedId,message.getContact(),message.getContent()));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse( Call<Void> call, Response<Void> response) {
                 //String s = response.body();
+
                 boolean isSuccessful = response.isSuccessful();
                 if (isSuccessful) {
                     Contact c = contactDao.get(message.getContact());
                     contactDao.delete(c);
+                    c.setLastdate(time);
                     c.setLast(message.getContent());
                     contactDao.insert(c);
+                    if(!serverContact.equals(idUserDao.index().get(0).getServer())){
+                        transferMessage(serverContact,connectedId,message.getContact(),message.getContent());
+                    }
                 }
                 else {
 
@@ -127,6 +144,34 @@ public class ContactActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void transferMessage(String serverContact,String connectedId,String contact,String content){
+
+        MessageTransferAPI messageTransferAPI = new MessageTransferAPI(serverContact);
+        MessageTransferWebServiceAPI  messageTransferWebServiceAPI = messageTransferAPI.getMessageTransferServiceAPI();
+
+        Call<Void> call =   messageTransferWebServiceAPI.transferMessage(new MessageToTransfer(connectedId,contact,content));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse( Call<Void> call, Response<Void> response) {
+                //String s = response.body();
+
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    }
+
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure( Call<Void> call,  Throwable t) {
+
+            }
+        });
+
 
     }
 
@@ -143,6 +188,7 @@ public class ContactActivity extends AppCompatActivity {
                     messageDao.insertAllMessages(response.body());
                     adapter.setMessages(response.body());
                     lstMessages.setAdapter(adapter);
+
                     //livaData - changing the room contact to server DB contacts
                 } else {
                     TextView text = findViewById(R.id.addContactErrorMessage);

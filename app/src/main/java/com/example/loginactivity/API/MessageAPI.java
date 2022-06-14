@@ -18,6 +18,7 @@ public class MessageAPI {
                 .build();
         messageWebServiceAPI = retrofit.create(MessageWebServiceAPI.class);
     }
+
     public  MessageWebServiceAPI getMessageWebServiceAPI() {
         return messageWebServiceAPI;
     }
