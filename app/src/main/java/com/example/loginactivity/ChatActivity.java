@@ -101,8 +101,15 @@ public class ChatActivity extends AppCompatActivity  {
 
         FloatingActionButton btnAdd= findViewById(R.id.chatActivityAddButton);
         btnAdd.setOnClickListener(view->{
-            //String id = intent.getStringExtra("id");
             Intent i =new Intent(this, AddContactActivity.class);
+            i.putExtra("id",id);
+            i.putExtra("server",server);
+            startActivity(i);
+        });
+
+        FloatingActionButton btnSetting= findViewById(R.id.settingActivityAddButton);
+        btnSetting.setOnClickListener(view->{
+            Intent i =new Intent(this, SettingActivity.class);
             i.putExtra("id",id);
             i.putExtra("server",server);
             startActivity(i);
