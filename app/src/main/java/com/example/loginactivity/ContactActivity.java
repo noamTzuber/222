@@ -41,10 +41,12 @@ public class ContactActivity extends AppCompatActivity {
 
     private AppDBIdUser dbUser;
     private IdUserDao idUserDao;
+    private ContactDao contactDao;
+    private AppDB dbContact;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void  onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
         Intent intent = getIntent();
@@ -56,12 +58,20 @@ public class ContactActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
         messageDao = dbMessage.messageDao();
+
+        dbContact = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        contactDao = dbContact.contactDao();
+
         dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
                 .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
         idUserDao = dbUser.idUserDao();
         String idUser=idUserDao.index().get(0).getId();
         messageDao.deleteAll();
+
+
 
         RecyclerView lstMessages = findViewById(R.id.lstMessages);
         adapter = new MessagesListAdapter(this);
@@ -102,6 +112,10 @@ public class ContactActivity extends AppCompatActivity {
                 //String s = response.body();
                 boolean isSuccessful = response.isSuccessful();
                 if (isSuccessful) {
+                    Contact c = contactDao.get(message.getContact());
+                    contactDao.delete(c);
+                    c.setLast(message.getContent());
+                    contactDao.insert(c);
                 }
                 else {
 

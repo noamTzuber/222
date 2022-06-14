@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity  {
     private IdUserDao idUserDao;
     private AppDBMessage dbMessage;
     private MessageDao messageDao;
+    private RecyclerView lstContacts;
 
 
     @Override
@@ -65,7 +66,7 @@ public class ChatActivity extends AppCompatActivity  {
                 .build();
         idUserDao = dbUser.idUserDao();
 
-        RecyclerView lstContacts = findViewById(R.id.lstContacts);
+        lstContacts = findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this);
         lstContacts.setAdapter(adapter);
         lstContacts.setLayoutManager(new LinearLayoutManager(this));
@@ -116,6 +117,8 @@ public class ChatActivity extends AppCompatActivity  {
     protected void onResume(){
         super.onResume();
         adapter.setContacts(contactDao.index());
+        lstContacts.setAdapter(adapter);
+
     }
 
     public void getAllContacts(RecyclerView lstContacts ,String id,ContactWebServiceAPI contactWebServiceAPI,String server){
