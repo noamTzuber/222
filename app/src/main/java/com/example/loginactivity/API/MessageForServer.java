@@ -3,9 +3,10 @@ package com.example.loginactivity.API;
 import androidx.room.Entity;
 
 public class MessageForServer {
-
     String contact;
     String content;
+
+
 
     public String getContact() {
         return contact;

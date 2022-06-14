@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.loginactivity.API.ContactAPI;
 import com.example.loginactivity.API.ContactWebServiceAPI;
 import com.example.loginactivity.API.MessageAPI;
+import com.example.loginactivity.API.MessageForServer;
 import com.example.loginactivity.API.MessageWebServiceAPI;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.adapters.MessagesListAdapter;
@@ -48,7 +49,7 @@ public class ContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact);
         Intent intent = getIntent();
         String name = intent.getStringExtra("nameContact");
-        String id = intent.getStringExtra("idContact");
+        String idContact = intent.getStringExtra("idContact");
         TextView t = findViewById(R.id.contactActivity_contactName);
         t.setText(name);
         dbMessage = Room.databaseBuilder(getApplicationContext(), AppDBMessage.class, "roomDBMessage.db")
@@ -69,7 +70,7 @@ public class ContactActivity extends AppCompatActivity {
 
         MessageAPI messageAPI = new MessageAPI();
         MessageWebServiceAPI messageWebServiceAPI = messageAPI.getMessageWebServiceAPI();
-        getAllMessages(lstMessages,messageWebServiceAPI, idUser, id);
+        getAllMessages(lstMessages,messageWebServiceAPI, idUser, idContact);
 
 
         FloatingActionButton btnAdd= findViewById(R.id.ContactActivitySendButton);
@@ -86,11 +87,32 @@ public class ContactActivity extends AppCompatActivity {
          messageDao.insert(message);
          adapter.setMessages(listM);
          lstMessages.setAdapter(adapter);
-
+         postMessage(messageWebServiceAPI,new MessageForServer(idContact,input),idUser);
         });
 
 
 
+
+    }
+    public void postMessage(MessageWebServiceAPI messageWebServiceAPI,MessageForServer message,String connectedId){
+        Call<Void> call =   messageWebServiceAPI.postMessage(message,message.getContact(),connectedId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse( Call<Void> call, Response<Void> response) {
+                //String s = response.body();
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure( Call<Void> call,  Throwable t) {
+
+            }
+        });
 
     }
 
