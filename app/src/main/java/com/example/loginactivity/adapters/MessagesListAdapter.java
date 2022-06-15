@@ -90,7 +90,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         if (messages != null) {
             final Message current = messages.get(position);
             holder.tvContentMessage.setText(current.getContent());
-            holder.tvCreatedMessage.setText(current.getCreated());
+            holder.tvCreatedMessage.setText(current.getCreated().substring(11, 16));
         }
     }
 
