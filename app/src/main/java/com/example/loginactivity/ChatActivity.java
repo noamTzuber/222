@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.loginactivity.API.ContactAPI;
 import com.example.loginactivity.API.ContactWebServiceAPI;
+import com.example.loginactivity.API.TokenToId;
 import com.example.loginactivity.adapters.ContactsListAdapter;
 import com.example.loginactivity.databinding.ActivityChatBinding;
 import com.example.loginactivity.myObjects.Contact;
@@ -54,6 +55,7 @@ public class ChatActivity extends AppCompatActivity  {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this,
                 instanceIdResult -> {
                     String newToken=instanceIdResult.getToken();
+                    setToken(id,newToken);
                 });
 
 
@@ -135,6 +137,33 @@ public class ChatActivity extends AppCompatActivity  {
         lstContacts.setAdapter(adapter);
 
     }
+public void setToken(String id,String token){
+    ContactAPI contactAPI = new ContactAPI();
+    ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
+
+    Call<Void> call =   contactWebServiceAPI.postToken(new TokenToId(id,token));
+    call.enqueue(new Callback<Void>() {
+        @Override
+        public void onResponse( Call<Void> call, Response<Void> response) {
+            //String s = response.body();
+            boolean isSuccessful = response.isSuccessful();
+            if (isSuccessful) {
+
+            }
+            else {
+                TextView text = findViewById(R.id.addContactErrorMessage);
+                text.setText(R.string.invitation_failed);
+            }
+        }
+
+        @Override
+        public void onFailure( Call<Void> call,  Throwable t) {
+            TextView text= findViewById(R.id.addContactErrorMessage);
+            text.setText(R.string.invitation_failed);
+        }
+    });
+
+}
 
     public void getAllContacts(RecyclerView lstContacts ,String id,ContactWebServiceAPI contactWebServiceAPI,String server){
 
