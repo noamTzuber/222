@@ -7,16 +7,17 @@
 
 
     <LinearLayout
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:background="@color/whiteForBack"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:padding="10dp"
+            android:background="@color/whiteForBack"
             android:id="@+id/tvContentMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

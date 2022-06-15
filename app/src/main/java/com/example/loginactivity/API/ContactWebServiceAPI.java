@@ -18,4 +18,7 @@ public interface ContactWebServiceAPI {
 
     @GET("contacts/")
     Call<List<Contact>> getContacts(@Query("connectedId") String name);
+
+    @POST("contacts/SetToken")
+    Call<Void> postToken(@Body TokenToId token);
 }

@@ -104,49 +104,16 @@ public class ContactActivity extends AppCompatActivity {
          messageDao.insert(message);
          adapter.setMessages(listM);
          lstMessages.setAdapter(adapter);
-         postMessage(serverContact,time,messageWebServiceAPI,new MessageForServer(idContact,input),idUser);
+//            transferMessage(serverContact,time,messageWebServiceAPI,new MessageForServer(idContact,input),idUser);
+            transferMessage(time,serverContact,idUser,idContact,input);
         });
 
 
 
 
     }
-    public void postMessage(String serverContact,String time,MessageWebServiceAPI messageWebServiceAPI,MessageForServer message,String connectedId){
 
-         Call<Void> call =   messageWebServiceAPI.postMessage(message,message.getContact(),connectedId);
-//         MessageTransferAPI messageTransferAPI = new MessageTransferAPI(serverContact);
-//        MessageTransferWebServiceAPI  messageTransferWebServiceAPI = messageTransferAPI.getMessageTransferServiceAPI();
-//
-//        Call<Void> call =   messageTransferWebServiceAPI.transferMessage(new MessageToTransfer(connectedId,message.getContact(),message.getContent()));
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse( Call<Void> call, Response<Void> response) {
-                //String s = response.body();
-
-                boolean isSuccessful = response.isSuccessful();
-                if (isSuccessful) {
-                    Contact c = contactDao.get(message.getContact());
-                    contactDao.delete(c);
-                    c.setLastdate(time);
-                    c.setLast(message.getContent());
-                    contactDao.insert(c);
-                    if(!serverContact.equals(idUserDao.index().get(0).getServer())){
-                        transferMessage(serverContact,connectedId,message.getContact(),message.getContent());
-                    }
-                }
-                else {
-
-                }
-            }
-
-            @Override
-            public void onFailure( Call<Void> call,  Throwable t) {
-
-            }
-        });
-
-    }
-    public void transferMessage(String serverContact,String connectedId,String contact,String content){
+    public void transferMessage(String time,String serverContact,String connectedId,String contact,String content){
 
         MessageTransferAPI messageTransferAPI = new MessageTransferAPI(serverContact);
         MessageTransferWebServiceAPI  messageTransferWebServiceAPI = messageTransferAPI.getMessageTransferServiceAPI();
@@ -159,20 +126,20 @@ public class ContactActivity extends AppCompatActivity {
 
                 boolean isSuccessful = response.isSuccessful();
                 if (isSuccessful) {
+                    Contact c = contactDao.get(contact);
+                    contactDao.delete(c);
+                    c.setLastdate(time);
+                    c.setLast(content);
+                    contactDao.insert(c);
                     }
-
                 else {
-
                 }
             }
-
             @Override
             public void onFailure( Call<Void> call,  Throwable t) {
 
             }
         });
-
-
     }
 
     public void getAllMessages(RecyclerView lstMessages,MessageWebServiceAPI messageWebServiceAPI, String id, String id2) {

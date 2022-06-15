@@ -2,21 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+
     android:layout_gravity="left"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         <LinearLayout
-            android:padding="10dp"
-            android:layout_margin="10dp"
+            android:padding="5dp"
             android:layout_gravity="left"
-            android:background="@color/whiteForBack"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
             <TextView
+                android:padding="10dp"
+                android:background="@color/whiteForBack"
                 android:layout_gravity="left"
                 app:layout_constraintEnd_toEndOf = "parent"
                 android:textColor="@color/black"
@@ -29,6 +29,7 @@
 
             </TextView>
             <TextView
+                android:textSize="20dp"
                 android:layout_margin="5dp"
                 android:layout_gravity="right"
                 android:id="@+id/tvCreatedMessage"
