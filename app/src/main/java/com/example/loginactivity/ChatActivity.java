@@ -15,7 +15,10 @@ import com.example.loginactivity.databinding.ActivityChatBinding;
 import com.example.loginactivity.myObjects.Contact;
 import com.example.loginactivity.myObjects.IdUser;
 import com.example.loginactivity.myObjects.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,11 @@ public class ChatActivity extends AppCompatActivity  {
         Intent intent=getIntent();
         String id=intent.getStringExtra("id");
         String server=intent.getStringExtra("server");
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this,
+                instanceIdResult -> {
+                    String newToken=instanceIdResult.getToken();
+                });
 
 
         // room for contacts

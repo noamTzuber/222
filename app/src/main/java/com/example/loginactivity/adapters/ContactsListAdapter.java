@@ -67,7 +67,12 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             final Contact current = contacts.get(position);
             holder.tvName.setText(current.getName());
             holder.tvLast.setText(current.getLast());
-            holder.tvLastTime.setText(current.getLastdate());
+            if (!current.getLastdate().equals("")) {
+                holder.tvLastTime.setText(current.getLastdate().substring(11, 16));
+            }
+            else{
+                holder.tvLastTime.setText("");
+            }
             Contact i = contacts.get(position);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
