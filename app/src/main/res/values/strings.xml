@@ -26,4 +26,5 @@
     <string name="invitation_failed">invitation failed</string>
     <string name="username_already_exist">username already exist</string>
     <string name="Server_error">Server error</string>
+    <string name="change_server">change server</string>
 </resources>

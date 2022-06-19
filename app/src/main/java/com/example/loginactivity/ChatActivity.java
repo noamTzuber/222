@@ -3,9 +3,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.loginactivity.API.ContactAPI;
@@ -35,12 +39,15 @@ public class ChatActivity extends AppCompatActivity  {
     List<String> list;
     private ContactsListAdapter adapter;
     private AppDB db;
-       private ContactDao contactDao;
+    private ContactDao contactDao;
     private AppDBIdUser dbUser;
     private IdUserDao idUserDao;
     private AppDBMessage dbMessage;
     private MessageDao messageDao;
     private RecyclerView lstContacts;
+    private AlertDialog.Builder dialogB;
+    private AlertDialog dialog;
+    private Button changeServer;
 
 
     @Override
@@ -51,6 +58,15 @@ public class ChatActivity extends AppCompatActivity  {
         Intent intent=getIntent();
         String id=intent.getStringExtra("id");
         String server=intent.getStringExtra("server");
+
+        dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        idUserDao = dbUser.idUserDao();
+
+//        if(!idUserDao.index().get(0).getServer().equals("10.0.2.2")){
+//            idUserDao.deleteAll();
+//        }
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ChatActivity.this,
                 instanceIdResult -> {
@@ -71,10 +87,7 @@ public class ChatActivity extends AppCompatActivity  {
         messageDao = dbMessage.messageDao();
 
         // room for user
-        dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
-                .fallbackToDestructiveMigration().allowMainThreadQueries()
-                .build();
-        idUserDao = dbUser.idUserDao();
+
 
         lstContacts = findViewById(R.id.lstContacts);
         adapter = new ContactsListAdapter(this);
@@ -94,7 +107,10 @@ public class ChatActivity extends AppCompatActivity  {
         else{
             String previousId=userId.get(0).getId();
             if(previousId.equals(id)){
-
+                IdUser user=idUserDao.index().get(0);
+                idUserDao.delete(user);
+                user.setServer(server);
+                idUserDao.insert(user);
             }
             else{
                 idUserDao.deleteAll();
@@ -105,7 +121,8 @@ public class ChatActivity extends AppCompatActivity  {
             }
         }
 
-        ContactAPI contactAPI = new ContactAPI();
+
+        ContactAPI contactAPI = new ContactAPI(idUserDao.index().get(0).getServer().toString());
         ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
         getAllContacts(lstContacts,id,contactWebServiceAPI,server);
 
@@ -117,28 +134,43 @@ public class ChatActivity extends AppCompatActivity  {
             startActivity(i);
         });
 
-        FloatingActionButton btnSetting= findViewById(R.id.settingActivityAddButton);
+        FloatingActionButton btnSetting= findViewById(R.id.chatSettingActivityAddButton);
         btnSetting.setOnClickListener(view->{
-            Intent i =new Intent(this, SettingActivity.class);
-            i.putExtra("id",id);
-            i.putExtra("server",server);
-            startActivity(i);
+            Intent in =new Intent(this, Setting1Activity.class);
+            in.putExtra("id",id);
+            in.putExtra("server",server);
+            startActivity(in);
         });
 
-
-
-//        contactDao.delete(contactDao.get("noam"));
     }
 
     @Override
     protected void onResume(){
-        super.onResume();
-        adapter.setContacts(contactDao.index());
-        lstContacts.setAdapter(adapter);
+        String g=idUserDao.index().get(0).getServer();
+        if(!idUserDao.index().get(0).getServer().equals("localhost:1234") && !idUserDao.index().get(0).getServer().equals("10.0.2.2:1234")){
+           dialogB= new AlertDialog.Builder(this);
+           final View pop=getLayoutInflater().inflate(R.layout.activity_pop_up,null);
+           dialogB.setView(pop);
+           dialog=dialogB.create();
+           dialog.show();
+           Button bt_yes = (Button)dialog.findViewById(R.id.changeTheServerAfterError);
+            bt_yes.setOnClickListener(view->{
+                dialog.dismiss();
+                Intent i =new Intent(this, Setting1Activity.class);
+                startActivity(i);
+
+            });
+        }
+            super.onResume();
+//            Intent i = new Intent(this, ChatActivity.class);
+//            startActivity(i);
+            adapter.setContacts(contactDao.index());
+            lstContacts.setAdapter(adapter);
+
 
     }
 public void setToken(String id,String token){
-    ContactAPI contactAPI = new ContactAPI();
+    ContactAPI contactAPI = new ContactAPI(idUserDao.index().get(0).getServer());
     ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
 
     Call<Void> call =   contactWebServiceAPI.postToken(new TokenToId(id,token));

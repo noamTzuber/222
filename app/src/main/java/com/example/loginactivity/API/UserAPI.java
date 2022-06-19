@@ -1,6 +1,7 @@
 package com.example.loginactivity.API;
 
 
+import com.example.loginactivity.IdUserDao;
 import com.example.loginactivity.MyApplication;
 import com.example.loginactivity.R;
 import com.example.loginactivity.myObjects.User;
@@ -27,5 +28,6 @@ public class UserAPI {
     public UserWebServiceAPI getUserWebServiceAPI(){
         return userWebServiceAPI;
     }
+
 
 }

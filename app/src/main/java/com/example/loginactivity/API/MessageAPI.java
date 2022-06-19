@@ -10,10 +10,12 @@ public class MessageAPI {
     Retrofit retrofit;
     MessageWebServiceAPI messageWebServiceAPI;
 
-    public MessageAPI() {
+    public MessageAPI(String server) {
+        String s=server.replace("localhost","10.0.2.2");
+        String serverC="http://"+s+"/api/";
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .baseUrl(serverC)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         messageWebServiceAPI = retrofit.create(MessageWebServiceAPI.class);

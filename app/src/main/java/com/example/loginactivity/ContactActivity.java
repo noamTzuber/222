@@ -59,6 +59,7 @@ public class ContactActivity extends AppCompatActivity {
         String serverContact = intent.getStringExtra("serverContact");
         TextView t = findViewById(R.id.contactActivity_contactName);
         t.setText(name);
+
         dbMessage = Room.databaseBuilder(getApplicationContext(), AppDBMessage.class, "roomDBMessage.db")
                 .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build();
@@ -83,7 +84,8 @@ public class ContactActivity extends AppCompatActivity {
         lstMessages.setAdapter(adapter);
         lstMessages.setLayoutManager(new LinearLayoutManager(this));
 
-        MessageAPI messageAPI = new MessageAPI();
+        MessageAPI messageAPI = new MessageAPI(idUserDao.index().get(0).getServer()
+        );
         MessageWebServiceAPI messageWebServiceAPI = messageAPI.getMessageWebServiceAPI();
         getAllMessages(lstMessages,messageWebServiceAPI, idUser, idContact);
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.loginactivity" >
+    package="com.example.loginactivity">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-
         android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,15 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginActivity"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".PopUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Setting1Activity"
+            android:exported="false" />
+
         <service
             android:name=".fireBase.MyService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
 
         <activity
             android:name=".AddContactActivity"
@@ -41,7 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -16,7 +16,8 @@
             >
             <TextView
                 android:padding="10dp"
-                android:background="@color/whiteForBack"
+                android:background="@drawable/message_outgoing"
+
                 android:layout_gravity="left"
                 app:layout_constraintEnd_toEndOf = "parent"
                 android:textColor="@color/black"
@@ -29,7 +30,7 @@
 
             </TextView>
             <TextView
-                android:textSize="20dp"
+                android:textSize="5dp"
                 android:layout_margin="5dp"
                 android:layout_gravity="right"
                 android:id="@+id/tvCreatedMessage"

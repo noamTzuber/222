@@ -31,6 +31,7 @@ public class MyService extends FirebaseMessagingService {
     private ContactDao contactDao;
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
         if (remoteMessage.getNotification() != null) {
 
             createNotificationChannel();

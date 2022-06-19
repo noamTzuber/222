@@ -57,37 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 //        getAllContacts(id,contactWebServiceAPI,server,i);
 
     }
-//    public void getAllContacts(String id,ContactWebServiceAPI contactWebServiceAPI,String server,Intent i){
-//        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
-//                .fallbackToDestructiveMigration().allowMainThreadQueries()
-//                .build();
-//        contactDao = db.contactDao();
-//        Call<List<Contact>> call =   contactWebServiceAPI.getContacts(id);
-//        call.enqueue(new Callback<List<Contact>>() {
-//            @Override
-//            public void onResponse( Call<List<Contact>> call, Response<List<Contact>> response) {
-//                //String s = response.body();
-//                boolean isSuccessful = response.isSuccessful();
-//                if (isSuccessful) {
-//                    contactDao.insertAllOrders(response.body());
-//
-//
-//                }
-//                else {
-//                    TextView text = findViewById(R.id.addContactErrorMessage);
-//                    text.setText(R.string.invitation_failed);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure( Call<List<Contact>> call,  Throwable t) {
-//                TextView text= findViewById(R.id.addContactErrorMessage);
-//                text.setText(R.string.invitation_failed);
-//            }
-//        });
-//
-//    }
+
 
     public void get( UserWebServiceAPI userWebServiceAPI) {
         Call<List<User>> call = userWebServiceAPI.getUsers();

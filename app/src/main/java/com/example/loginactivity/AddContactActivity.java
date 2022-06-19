@@ -29,8 +29,10 @@ import retrofit2.Response;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
-
     private ContactDao contactDao;
+
+    private AppDBIdUser dbUser;
+    private IdUserDao idUserDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,13 @@ public class AddContactActivity extends AppCompatActivity {
                 .build();
         contactDao = db.contactDao();
 
-       //        postUser(contactWebServiceAPI);
+        dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        idUserDao = dbUser.idUserDao();
+
+
+        //        postUser(contactWebServiceAPI);
 
         Button btnAdd=findViewById(R.id.addContactAddButton);
         btnAdd.setOnClickListener(v->{
@@ -55,11 +63,11 @@ public class AddContactActivity extends AppCompatActivity {
 
             InvitationsAPI invitationsAPI=new InvitationsAPI(server.getText().toString());
             InvitationsWebServiceAPI invitationsWebServiceAPI = invitationsAPI.getInvitationsWebServiceAPI();
-            invite(invitationsWebServiceAPI,id,name.getText().toString(),nickName.getText().toString(), server.getText().toString());
+            invite( idUserDao.index().get(0).getServer().toString(),invitationsWebServiceAPI,id,name.getText().toString(),nickName.getText().toString(), server.getText().toString());
 
         });
           }
-    public void invite(@NonNull InvitationsWebServiceAPI invitationsWebServiceAPI, String id , String name,String nickName, String server) {
+    public void invite(String UserServer,@NonNull InvitationsWebServiceAPI invitationsWebServiceAPI, String id , String name,String nickName, String server) {
 
         Call<Void> call =   invitationsWebServiceAPI.inviteContact(new InvitationsMessage(id,name,server),id);
         call.enqueue(new Callback<Void>() {
@@ -71,7 +79,7 @@ public class AddContactActivity extends AppCompatActivity {
                     Contact contact = new Contact(name, nickName,
                             server, "", "");
 
-                    ContactAPI contactAPI = new ContactAPI();
+                    ContactAPI contactAPI = new ContactAPI(UserServer);
                     ContactWebServiceAPI contactWebServiceAPI = contactAPI.getContactWebServiceAPI();
                     postUser(contact,id,contactWebServiceAPI);
                    // finish();
