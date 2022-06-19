@@ -30,7 +30,6 @@
 
             </TextView>
             <TextView
-                android:textSize="5dp"
                 android:layout_margin="5dp"
                 android:layout_gravity="right"
                 android:id="@+id/tvCreatedMessage"

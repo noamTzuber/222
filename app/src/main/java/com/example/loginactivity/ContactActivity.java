@@ -42,7 +42,7 @@ public class ContactActivity extends AppCompatActivity {
     private MessagesListAdapter adapter;
     private AppDBMessage dbMessage;
     private MessageDao messageDao;
-
+    RecyclerView lstMessages;
     private AppDBIdUser dbUser;
     private IdUserDao idUserDao;
     private ContactDao contactDao;
@@ -79,7 +79,7 @@ public class ContactActivity extends AppCompatActivity {
 
 
 
-        RecyclerView lstMessages = findViewById(R.id.lstMessages);
+        lstMessages = findViewById(R.id.lstMessages);
         adapter = new MessagesListAdapter(this);
         lstMessages.setAdapter(adapter);
         lstMessages.setLayoutManager(new LinearLayoutManager(this));
@@ -100,8 +100,8 @@ public class ContactActivity extends AppCompatActivity {
          String time=LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString();
 
          Message message=new Message(0,input, time,true);
-         List<Message> listM=messageDao.index();
 
+         List<Message> listM=messageDao.index();
          listM.add(message);
          messageDao.insert(message);
          adapter.setMessages(listM);
@@ -111,9 +111,8 @@ public class ContactActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+
 
     public void transferMessage(String time,String serverContact,String connectedId,String contact,String content){
 
