@@ -112,7 +112,11 @@ public class ContactActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onStop(){
+        super.onStop();
+        finish();
+    }
 
     public void transferMessage(String time,String serverContact,String connectedId,String contact,String content){
 

@@ -47,7 +47,7 @@ public class ChatActivity extends AppCompatActivity  {
     private RecyclerView lstContacts;
     private AlertDialog.Builder dialogB;
     private AlertDialog dialog;
-    private Button changeServer;
+
 
 
     @Override
