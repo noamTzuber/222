@@ -59,31 +59,30 @@ public class MyService extends FirebaseMessagingService {
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent)
-                    .setContentIntent(pendingIntent)
                     .setPriority(Notification.PRIORITY_DEFAULT);
 
             db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
                     .fallbackToDestructiveMigration().allowMainThreadQueries()
                     .build();
             contactDao = db.contactDao();
-            if (Objects.equals(remoteMessage.getData().get("Invite"), "0")) {
-                Contact c = contactDao.get(remoteMessage.getData().get("From"));
-                contactDao.delete(c);
-                c.setLastdate(LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString());
-                c.setLast(remoteMessage.getNotification().getBody());
-                contactDao.insert(c);
-
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-                notificationManagerCompat.notify(1, builder.build());
-            } else {
-                Contact c = new Contact(remoteMessage.getData().get("From"),remoteMessage.getData().get("From")
-                ,remoteMessage.getData().get("Server"),"","");
-                contactDao.insert(c);
-
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-                notificationManagerCompat.notify(1, builder.build());
-
-            }
+//            if (Objects.equals(remoteMessage.getData().get("Invite"), "0")) {
+//                Contact c = contactDao.get(remoteMessage.getData().get("From"));
+//                contactDao.delete(c);
+//                c.setLastdate(LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString());
+//                c.setLast(remoteMessage.getNotification().getBody());
+//                contactDao.insert(c);
+//
+//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+//                notificationManagerCompat.notify(1, builder.build());
+//            } else {
+//                Contact c = new Contact(remoteMessage.getData().get("From"),remoteMessage.getData().get("From")
+//                ,remoteMessage.getData().get("Server"),"","");
+//                contactDao.insert(c);
+//
+//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+//                notificationManagerCompat.notify(1, builder.build());
+//
+//            }
         }
     }
 
