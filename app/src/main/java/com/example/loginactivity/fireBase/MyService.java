@@ -11,19 +11,31 @@ import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.room.Room;
 
+import com.example.loginactivity.AppDB;
 import com.example.loginactivity.ContactActivity;
+import com.example.loginactivity.ContactDao;
 import com.example.loginactivity.R;
+import com.example.loginactivity.myObjects.Contact;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Objects;
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 public class MyService extends FirebaseMessagingService {
     public MyService() {
     }
+    private AppDB db;
+    private ContactDao contactDao;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
@@ -49,8 +61,30 @@ public class MyService extends FirebaseMessagingService {
                         .setContentIntent(pendingIntent)
                         .setPriority(Notification.PRIORITY_DEFAULT);
 
-                NotificationManagerCompat notificationManagerCompat= NotificationManagerCompat.from(this);
+
+
+                db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "roomDB.db")
+                        .fallbackToDestructiveMigration().allowMainThreadQueries()
+                        .build();
+                contactDao = db.contactDao();
+            if (Objects.equals(remoteMessage.getData().get("Invite"), "0")) {
+                Contact c = contactDao.get(remoteMessage.getData().get("From"));
+                contactDao.delete(c);
+                c.setLastdate(LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString());
+                c.setLast(remoteMessage.getNotification().getBody());
+                contactDao.insert(c);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
                 notificationManagerCompat.notify(1, builder.build());
+            } else {
+                Contact c = new Contact(remoteMessage.getData().get("From"),remoteMessage.getData().get("From")
+                ,remoteMessage.getData().get("Server"),"","");
+                contactDao.insert(c);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+                notificationManagerCompat.notify(1, builder.build());
+
+            }
             }
         }
 
