@@ -46,8 +46,8 @@ public class MyService extends FirebaseMessagingService {
 
 
             Intent i = new Intent(this, ContactActivity.class);
-            i.putExtra("idContact","noam");
-            i.putExtra("nameContact", "noam");
+            i.putExtra("idContact",remoteMessage.getData().get("From"));
+            i.putExtra("nameContact", "From");
             i.putExtra("serverContact", "10.0.2.2:1234");
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -65,24 +65,24 @@ public class MyService extends FirebaseMessagingService {
                     .fallbackToDestructiveMigration().allowMainThreadQueries()
                     .build();
             contactDao = db.contactDao();
-//            if (Objects.equals(remoteMessage.getData().get("Invite"), "0")) {
-//                Contact c = contactDao.get(remoteMessage.getData().get("From"));
-//                contactDao.delete(c);
-//                c.setLastdate(LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString());
-//                c.setLast(remoteMessage.getNotification().getBody());
-//                contactDao.insert(c);
-//
-//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-//                notificationManagerCompat.notify(1, builder.build());
-//            } else {
-//                Contact c = new Contact(remoteMessage.getData().get("From"),remoteMessage.getData().get("From")
-//                ,remoteMessage.getData().get("Server"),"","");
-//                contactDao.insert(c);
-//
-//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-//                notificationManagerCompat.notify(1, builder.build());
-//
-//            }
+            if (Objects.equals(remoteMessage.getData().get("Invite"), "0")) {
+                Contact c = contactDao.get(remoteMessage.getData().get("From"));
+                contactDao.delete(c);
+                c.setLastdate(LocalDateTime.now(ZoneId.of("Asia/Jerusalem")).toString());
+                c.setLast(remoteMessage.getNotification().getBody());
+                contactDao.insert(c);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+                notificationManagerCompat.notify(1, builder.build());
+            } else {
+                Contact c = new Contact(remoteMessage.getData().get("From"),remoteMessage.getData().get("From")
+                ,remoteMessage.getData().get("Server"),"","");
+                contactDao.insert(c);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+                notificationManagerCompat.notify(1, builder.build());
+
+            }
         }
     }
 
