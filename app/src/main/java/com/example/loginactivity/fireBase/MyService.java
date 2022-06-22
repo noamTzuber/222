@@ -47,7 +47,7 @@ public class MyService extends FirebaseMessagingService {
 
             Intent i = new Intent(this, ContactActivity.class);
             i.putExtra("idContact",remoteMessage.getData().get("From"));
-            i.putExtra("nameContact", "From");
+            i.putExtra("nameContact", remoteMessage.getData().get("From"));
             i.putExtra("serverContact", "10.0.2.2:1234");
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
