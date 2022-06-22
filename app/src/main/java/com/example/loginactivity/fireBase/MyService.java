@@ -17,8 +17,10 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.room.Room;
 
 import com.example.loginactivity.AppDB;
+import com.example.loginactivity.AppDBIdUser;
 import com.example.loginactivity.ContactActivity;
 import com.example.loginactivity.ContactDao;
+import com.example.loginactivity.IdUserDao;
 import com.example.loginactivity.R;
 import com.example.loginactivity.myObjects.Contact;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -35,11 +37,19 @@ public class MyService extends FirebaseMessagingService {
 
     private AppDB db;
     private ContactDao contactDao;
-
+    private AppDBIdUser dbUser;
+    private IdUserDao idUserDao;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        dbUser = Room.databaseBuilder(getApplicationContext(), AppDBIdUser.class, "roomDBIdUser.db")
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
+                .build();
+        idUserDao = dbUser.idUserDao();
+        if(Objects.equals(remoteMessage.getData().get("From"), idUserDao.index().get(0).getId())){
+            return;
+        }
         if (remoteMessage.getNotification() != null) {
 
             createNotificationChannel();
