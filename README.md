@@ -12,15 +12,10 @@ You can register with new user, and if you want we have some register users in t
 Pay attantion that you cannot register with thos usernames because thay already register...
 
 Username: yossi
-
 Password: yossi1234
 
-
 Username: noam
-
 Password: noam1234
 
-
 Username: david
-
 Password: 123456789
